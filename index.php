@@ -18,10 +18,6 @@ if (isset($_SESSION['showAlert'])) {
 
 
 
-
-</div>
-
-
 <?php
 include("./includes/footer.php");
 

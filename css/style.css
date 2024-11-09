@@ -211,7 +211,8 @@ body {
 }
 
 .form-group input,
-.form-group select {
+.form-group select,
+.form-group textarea {
   width: 100%;
   padding: 10px;
   border: 1px solid #ddd;
@@ -221,7 +222,8 @@ body {
 }
 
 .form-group input:focus,
-.form-group select:focus {
+.form-group select:focus,
+.form-group textarea:focus {
   border-color: #007bff;
   outline: none;
 }
@@ -355,17 +357,6 @@ button[type="submit"]:hover {
   margin-bottom: 5px;
 }
 
-.form-group input[type="text"],
-.form-group input[type="email"],
-.form-group select {
-  width: 100%;
-  padding: 8px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
 .form-actions {
   margin-top: 20px;
   display: flex;
@@ -399,4 +390,3 @@ button[type="submit"]:hover {
 .btn-secondary:hover {
   background-color: #5a6268;
 }
-

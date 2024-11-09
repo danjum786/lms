@@ -6,7 +6,6 @@ include("./includes/db.php"); // Include your database connection file
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
-    $role = mysqli_real_escape_string($conn, $_POST['role']);
 
     // Check if fields are empty
     if (empty($email) || empty($password)) {
@@ -19,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Query to find the user with provided credentials
-    $query = "SELECT * FROM Users WHERE email = '$email'";
+    $query = "SELECT * FROM users WHERE email = '$email'";
     $result = mysqli_query($conn, $query);
 
     if ($result && mysqli_num_rows($result) == 1) {

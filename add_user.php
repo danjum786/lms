@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $role = $_POST['role'];
 
     // Check for duplicate email
-    $checkQuery = "SELECT * FROM Users WHERE email = '$email'";
+    $checkQuery = "SELECT * FROM users WHERE email = '$email'";
     $result = mysqli_query($conn, $checkQuery);
 
     if (mysqli_num_rows($result) > 0) {
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ];
     } else {
         // Insert user data into the database if no duplicate is found
-        $query = "INSERT INTO Users (name, email, password, role) VALUES ('$name', '$email', '$password', '$role')";
+        $query = "INSERT INTO users (name, email, password, role) VALUES ('$name', '$email', '$password', '$role')";
         if (mysqli_query($conn, $query)) {
             $_SESSION['showAlert'] = [
                 'msg' => 'Registration successful!',

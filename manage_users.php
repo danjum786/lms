@@ -4,7 +4,7 @@ include("./includes/db.php"); // Ensure to include your database connection file
 checkUser();
 
 // Retrieve users data
-$query = "SELECT * FROM Users ORDER BY created_at DESC";
+$query = "SELECT * FROM users ORDER BY created_at DESC";
 $result = mysqli_query($conn, $query);
 ?>
 

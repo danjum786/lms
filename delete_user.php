@@ -5,7 +5,7 @@ if (isset($_POST['user_id'])) {
     $user_id = (int) $_POST['user_id'];
 
     // Delete user from database
-    $query = "DELETE FROM Users WHERE user_id = ?";
+    $query = "DELETE FROM users WHERE user_id = ?";
     $stmt = mysqli_prepare($conn, $query);
     mysqli_stmt_bind_param($stmt, "i", $user_id);
     mysqli_stmt_execute($stmt);

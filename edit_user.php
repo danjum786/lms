@@ -10,7 +10,7 @@ $messageType = ''; // This will hold 'success' or 'error' class
 $user_id = isset($_GET['user_id']) ? (int) $_GET['user_id'] : 0;
 
 // Fetch user details
-$query = "SELECT * FROM Users WHERE user_id = ?";
+$query = "SELECT * FROM users WHERE user_id = ?";
 $stmt = mysqli_prepare($conn, $query);
 mysqli_stmt_bind_param($stmt, "i", $user_id);
 mysqli_stmt_execute($stmt);
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $role = $_POST['role'];
 
-    $query = "UPDATE Users SET name = ?, email = ?, role = ? WHERE user_id = ?";
+    $query = "UPDATE users SET name = ?, email = ?, role = ? WHERE user_id = ?";
     $stmt = mysqli_prepare($conn, $query);
     mysqli_stmt_bind_param($stmt, "sssi", $name, $email, $role, $user_id);
 
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     mysqli_stmt_close($stmt);
 
     // Refresh user data
-    $query = "SELECT * FROM Users WHERE user_id = ?";
+    $query = "SELECT * FROM users WHERE user_id = ?";
     $stmt = mysqli_prepare($conn, $query);
     mysqli_stmt_bind_param($stmt, "i", $user_id);
     mysqli_stmt_execute($stmt);
