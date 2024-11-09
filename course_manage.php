@@ -36,9 +36,10 @@ $result = mysqli_query($conn, $sql);
         </thead>
         <tbody>
             <?php if (mysqli_num_rows($result) > 0): ?>
-                <?php while ($course = mysqli_fetch_assoc($result)): ?>
+                <?php $counter = 1;
+                while ($course = mysqli_fetch_assoc($result)): ?>
                     <tr>
-                        <td><?php echo htmlspecialchars($course['course_id']); ?></td>
+                        <td><?php echo $counter; ?></td>
                         <td><?php echo htmlspecialchars($course['title']); ?></td>
                         <td><?php echo date('Y-m-d', strtotime($course['created_at'])); ?></td>
                         <td>
@@ -46,7 +47,8 @@ $result = mysqli_query($conn, $sql);
                             <a href="course_delete.php?id=<?php echo $course['course_id']; ?>" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this course?');">Delete</a>
                         </td>
                     </tr>
-                <?php endwhile; ?>
+                <?php $counter++;
+                endwhile; ?>
             <?php else: ?>
                 <tr>
                     <td colspan="4">No courses found.</td>

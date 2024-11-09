@@ -299,6 +299,9 @@ button[type="submit"]:hover {
   text-align: left;
   border: 1px solid #ddd;
 }
+.data-table a {
+  text-decoration: none;
+}
 
 .data-table th {
   background-color: #333;
