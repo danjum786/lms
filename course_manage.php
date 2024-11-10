@@ -3,10 +3,15 @@ include("./includes/header.php");
 include("./includes/db.php");
 
 // Redirect if not logged in as admin
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+if (!isset($_SESSION['user_id'])) {
+    $_SESSION['showAlert'] = [
+        'color' => '#721c24',
+        'msg' => 'You cannot access this page'
+    ];
     header("Location: login.php");
     exit();
 }
+
 
 // Fetch courses from the database
 $sql = "SELECT course_id, title, created_at FROM courses";
@@ -43,8 +48,11 @@ $result = mysqli_query($conn, $sql);
                         <td><?php echo htmlspecialchars($course['title']); ?></td>
                         <td><?php echo date('Y-m-d', strtotime($course['created_at'])); ?></td>
                         <td>
-                            <a href="course_edit.php?id=<?php echo $course['course_id']; ?>" class="btn btn-edit">Edit</a>
-                            <a href="course_delete.php?id=<?php echo $course['course_id']; ?>" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this course?');">Delete</a>
+                            <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                                <a href="course_edit.php?id=<?php echo $course['course_id']; ?>" class="btn btn-edit">Edit</a>
+                                <a href="course_delete.php?id=<?php echo $course['course_id']; ?>" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this course?');">Delete</a>
+                            <?php endif; ?>
+
                         </td>
                     </tr>
                 <?php $counter++;

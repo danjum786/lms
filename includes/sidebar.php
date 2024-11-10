@@ -25,7 +25,7 @@ checkUser();
                 <a href="#"><i class="fas fa-book"></i> Courses <i class="fas fa-caret-down caret"></i></a>
                 <ul class="dropdown-menu">
                     <li><a href="./course_add.php">Add Course</a></li>
-                    <li><a href="course_manage.php">Manage Courses</a></li>
+                    <li><a href="./course_manage.php">Manage Courses</a></li>
                 </ul>
             </li>
             <li class="dropdown">
@@ -33,13 +33,6 @@ checkUser();
                 <ul class="dropdown-menu">
                     <li><a href="./lesson_add.php">Add Lesson</a></li>
                     <li><a href="lesson_manage.php">Manage Lessons</a></li>
-                </ul>
-            </li>
-            <li class="dropdown">
-                <a href="#"><i class="fas fa-book"></i> Quiz <i class="fas fa-caret-down caret"></i></a>
-                <ul class="dropdown-menu">
-                    <li><a href="./quiz_add.php">Add Quiz</a></li>
-                    <li><a href="quiz_manage.php">Manage Quiz</a></li>
                 </ul>
             </li>
             <!-- Admin: Show Students section -->
@@ -51,8 +44,13 @@ checkUser();
             <li class="dropdown">
                 <a href="#"><i class="fas fa-book"></i> Courses <i class="fas fa-caret-down caret"></i></a>
                 <ul class="dropdown-menu">
-                    <li><a href="./course_add.php">Add Course</a></li>
-                    <li><a href="#">Manage Courses</a></li>
+                    <li><a href="./course_manage.php">All Courses</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#"><i class="fas fa-book"></i> Lessons <i class="fas fa-caret-down caret"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="lesson_manage.php">All Lessons</a></li>
                 </ul>
             </li>
             <!-- Instructor: Show Students section -->
@@ -61,8 +59,17 @@ checkUser();
             </li>
         <?php } elseif ($_SESSION['role'] == 'student') { ?>
             <!-- Student: Show Students section only -->
-            <li>
-                <a href="#"><i class="fas fa-book"></i> Students</a>
+            <li class="dropdown">
+                <a href="#"><i class="fas fa-book"></i> Courses <i class="fas fa-caret-down caret"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="./course_manage.php">Manage Courses</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#"><i class="fas fa-book"></i> Lessons <i class="fas fa-caret-down caret"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="lesson_manage.php">All Lessons</a></li>
+                </ul>
             </li>
         <?php } ?>
 

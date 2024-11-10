@@ -2,8 +2,12 @@
 session_start();
 include("./includes/db.php");
 
-// Redirect if not logged in as admin
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+// Redirect if not logged in as admin and instructor
+if (!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'instructor')) {
+    $_SESSION['showAlert'] = [
+        'color' => '#721c24',
+        'msg' => 'You cannot access this page'
+    ];
     header("Location: login.php");
     exit();
 }

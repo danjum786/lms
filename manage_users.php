@@ -1,7 +1,17 @@
 <?php
 include("./includes/header.php");
 include("./includes/db.php"); // Ensure to include your database connection file
-checkUser();
+
+// Redirect if not logged in as admin
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+    $_SESSION['showAlert'] = [
+        'color' => '#721c24',
+        'msg' => 'You cannot access this page'
+    ];
+    header("Location: login.php");
+    exit();
+}
+
 
 // Retrieve users data
 $query = "SELECT * FROM users ORDER BY created_at DESC";
