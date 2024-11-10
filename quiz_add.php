@@ -11,74 +11,77 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'admin' && $_SESSION[
     header("Location: login.php");
     exit();
 }
-
-
-// Retrieve lesson ID from URL
-if (isset($_GET['lesson_id'])) {
-    $lesson_id = $_GET['lesson_id']; // The lesson for which MCQs are being added
-} else {
-    echo "Lesson ID is missing!";
-    exit();
-}
-
-// Fetch lesson details (Optional)
-$sql = "SELECT * FROM lessons WHERE lesson_id = ?";
-$stmt = mysqli_prepare($conn, $sql);
-mysqli_stmt_bind_param($stmt, "i", $lesson_id);
-mysqli_stmt_execute($stmt);
-$lesson = mysqli_stmt_get_result($stmt)->fetch_assoc();
-if (!$lesson) {
-    echo "Lesson not found!";
-    exit();
-}
-
 ?>
-
+<!-- Main Content Area -->
 <div class="main-content">
-    <div class="form-container">
-        <h1>Add MCQs for Lesson: <?php echo htmlspecialchars($lesson['title']); ?></h1>
+    <?php
+    $lesson_id  = '';
+    // Retrieve lesson ID from URL
+    if (isset($_GET['lesson_id'])) {
+        $lesson_id = $_GET['lesson_id']; // The lesson for which MCQs are being added
+    } else {
+        echo "Lesson ID is missing!";
+        exit();
+    }
+    // Fetch lessons from the database
+    $sql = "SELECT lesson_id, title FROM lessons WHERE lesson_id = $lesson_id"; // Adjust the table name and column names if needed
+    $result = $conn->query($sql);
 
-        <!-- MCQ Form -->
-        <form action="quiz_add_process.php?lesson_id=<?php echo $lesson['lesson_id'] ?>" method="POST">
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+    }
+    $conn->close();
+    ?>
+
+    <div class="form-container">
+        <h1>Create MCQ for Lesson: <?php echo $row['title']; ?></h1>
+        <form action="quiz_add_process.php?lesson_id=<?php echo $row['lesson_id']; ?>" method="POST">
             <div class="form-group">
-                <label for="question_1">Question 1</label>
-                <input type="text" id="question_1" name="questions[0][question]" class="form-input" required>
+                <label for="quiz_question">Quiz Question</label>
+                <textarea name="quiz_question" id="quiz_question" rows="4" required></textarea>
             </div>
+
             <div class="form-group">
-                <label for="option_1_1">Option 1</label>
-                <input type="text" id="option_1_1" name="questions[0][options][0]" class="form-input" required>
+                <label for="option_1">Option 1</label>
+                <input type="text" name="option_1" id="option_1" required>
             </div>
+
             <div class="form-group">
-                <label for="option_1_2">Option 2</label>
-                <input type="text" id="option_1_2" name="questions[0][options][1]" class="form-input" required>
+                <label for="option_2">Option 2</label>
+                <input type="text" name="option_2" id="option_2" required>
             </div>
+
             <div class="form-group">
-                <label for="option_1_3">Option 3</label>
-                <input type="text" id="option_1_3" name="questions[0][options][2]" class="form-input" required>
+                <label for="option_3">Option 3</label>
+                <input type="text" name="option_3" id="option_3" required>
             </div>
+
             <div class="form-group">
-                <label for="option_1_4">Option 4</label>
-                <input type="text" id="option_1_4" name="questions[0][options][3]" class="form-input" required>
+                <label for="option_4">Option 4</label>
+                <input type="text" name="option_4" id="option_4" required>
             </div>
+
             <div class="form-group">
-                <label for="correct_1">Correct Option</label>
-                <select name="questions[0][correct]" class="form-input">
-                    <option value="0">Option 1</option>
-                    <option value="1">Option 2</option>
-                    <option value="2">Option 3</option>
-                    <option value="3">Option 4</option>
+                <label for="correct_option">Correct Option</label>
+                <select name="correct_option" id="correct_option" required>
+                    <option value="1">Option 1</option>
+                    <option value="2">Option 2</option>
+                    <option value="3">Option 3</option>
+                    <option value="4">Option 4</option>
                 </select>
             </div>
 
+            <button type="submit">Create Quiz</button>
+        </form>
     </div>
 
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Add MCQs</button>
-    </div>
-    </form>
+
 </div>
-</div>
+
+
+
 
 <?php
 include("./includes/footer.php");
+
 ?>

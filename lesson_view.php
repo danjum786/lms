@@ -36,6 +36,10 @@ if (!$lesson) {
     header("Location: lesson_manage.php");
     exit();
 }
+
+// Fetch quizzes related to this lesson
+$quiz_sql = "SELECT id, quiz_data FROM quizzez WHERE lesson_id = '$lesson_id'";
+$quiz_result = mysqli_query($conn, $quiz_sql);
 ?>
 
 <div class="main-content">
@@ -58,59 +62,35 @@ if (!$lesson) {
         </div>
     </div>
 
-    <!-- Display Quizzes for this Lesson -->
-    <div class="lesson-quizzes">
-        <h3>Quizzes for this Lesson</h3>
-
-        <?php
-        // Fetch quizzes associated with this lesson
-        $sql_quizzes = "SELECT * FROM lesson_quizzes WHERE lesson_id = '$lesson_id'";
-        $quizzes_result = mysqli_query($conn, $sql_quizzes);
-
-        $counter = 1;
-        if (mysqli_num_rows($quizzes_result) > 0) {
-            while ($quiz = mysqli_fetch_assoc($quizzes_result)) {
-                echo "<div class='quiz'>";
-
-                // Fetch questions for this quiz
-                $quiz_id = $quiz['quiz_id'];
-                $sql_questions = "SELECT * FROM quiz_questions WHERE lesson_quiz_id = '$quiz_id'";
-                $questions_result = mysqli_query($conn, $sql_questions);
-
-                if (mysqli_num_rows($questions_result) > 0) {
-                    while ($question = mysqli_fetch_assoc($questions_result)) {
-                        echo "<div class='question'>";
-                        echo "<p><strong>$counter Question:</strong> " . htmlspecialchars($question['question_text']) . "</p>";
-
-                        // Fetch options for this question
-                        $question_id = $question['question_id'];
-                        $sql_options = "SELECT * FROM quiz_options WHERE question_id = '$question_id'";
-                        $options_result = mysqli_query($conn, $sql_options);
-
-                        echo "<ul class='quiz-list'>";
-                        while ($option = mysqli_fetch_assoc($options_result)) {
-                            $is_correct = $option['is_correct'] ? ' (Correct)' : '';
-                            echo "<li class='quiz-item'>" . htmlspecialchars($option['option_text']) . $is_correct . "</li>";
-                        }
-                        echo "</ul>";
-                        // echo <<<HTML
-                        //         <button class="btn btn-delete" style="margin:20px 0px;" onclick="deleteQuiz({$quiz['quiz_id']})">Delete Quiz</button>
-                        //         HTML;
-                        echo "</div>"; // end question
-                        $counter++;
-                    }
-                } else {
-                    echo "<p>No questions available for this quiz.</p>";
+    <!-- Display Quizzes -->
+    <div class="lesson-details">
+        <div class="quizzes">
+            <h3>Quizzes for this Lesson</h3>
+            <?php
+            if (mysqli_num_rows($quiz_result) > 0) {
+                while ($quiz = mysqli_fetch_assoc($quiz_result)) {
+                    $quiz_data = json_decode($quiz['quiz_data'], true);
+            ?>
+                    <div class="quiz">
+                        <h4><?php echo htmlspecialchars($quiz_data['question']); ?></h4>
+                        <ul class="quiz-options">
+                            <?php
+                            foreach ($quiz_data['options'] as $option_num => $option_text) {
+                                echo "<li class='quiz-option'>Option $option_num: " . htmlspecialchars($option_text) . "</li>";
+                            }
+                            ?>
+                        </ul>
+                        <p><strong>Correct Option:</strong> Option <?php echo $quiz_data['correct_option']; ?></p>
+                    </div>
+            <?php
                 }
-                echo "</div>"; // end quiz
+            } else {
+                echo "<p>No quizzes available for this lesson.</p>";
             }
-        } else {
-            echo "<p>No quizzes available for this lesson.</p>";
-        }
-        ?>
-
-
+            ?>
+        </div>
     </div>
+
 </div>
 
 <?php include("./includes/footer.php"); ?>
