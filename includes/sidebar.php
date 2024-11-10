@@ -37,7 +37,7 @@ checkUser();
             </li>
             <!-- Admin: Show Students section -->
             <li>
-                <a href="#"><i class="fas fa-book"></i> Students</a>
+                <a href="./students_record.php"><i class="fas fa-book"></i> Students</a>
             </li>
         <?php } elseif ($_SESSION['role'] == 'instructor') { ?>
             <!-- Instructor: Show Courses section -->
@@ -55,7 +55,7 @@ checkUser();
             </li>
             <!-- Instructor: Show Students section -->
             <li>
-                <a href="#"><i class="fas fa-book"></i> Students</a>
+                <a href="./students_record.php"><i class="fas fa-book"></i> Students</a>
             </li>
         <?php } elseif ($_SESSION['role'] == 'student') { ?>
             <!-- Student: Show Students section only -->

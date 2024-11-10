@@ -2,6 +2,16 @@
 include("./includes/header.php");
 include("./includes/db.php"); // Database connection
 
+// Redirect if not logged in as admin
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+    $_SESSION['showAlert'] = [
+        'color' => '#721c24',
+        'msg' => 'You cannot access this page'
+    ];
+    header("Location: login.php");
+    exit();
+}
+
 // Assuming this part is used to process form submission
 $message = '';
 $messageType = ''; // This will hold 'success' or 'error' class
