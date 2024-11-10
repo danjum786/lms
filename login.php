@@ -61,8 +61,14 @@ if (isset($_SESSION['showAlert'])) {
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">Login</button>
             </div>
-
+            <div style="margin: 10px 0px;">
+                <p>
+                    Don't have an account?
+                    <a style="text-decoration: none;" href="./register.php"> Register Here</a>
+                </p>
+            </div>
         </form>
+
     </div>
 
 

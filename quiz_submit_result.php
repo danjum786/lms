@@ -19,6 +19,7 @@ $lesson_id = $_GET['lesson_id'];
 // Fetch student's answers
 $answers_query = "SELECT * FROM quiz_answers WHERE student_id = '$student_id' AND lesson_id = '$lesson_id'";
 $answers_result = mysqli_query($conn, $answers_query);
+$counter =1;
 
 if (mysqli_num_rows($answers_result) == 0) {
     $_SESSION['showAlert'] = [
@@ -36,45 +37,50 @@ $correct_answers = 0;
 ?>
 
 <div class="main-content">
-    <h1>Quiz Results</h1>;
-    <?php
-    echo "<ul>";
+    <div class="lesson-details">
+        <h1 style="margin-bottom: 20px;">Quiz Results</h1>
 
-    while ($answer_row = mysqli_fetch_assoc($answers_result)) {
-        $quiz_id = $answer_row['quiz_id'];
-        $student_answer = $answer_row['answer'];
+        <?php
+        echo "<ul class='quiz-options'>";
 
-        // Fetch correct answer from quiz data
-        $quiz_query = "SELECT quiz_data FROM quizzez WHERE id = '$quiz_id'";
-        $quiz_result = mysqli_query($conn, $quiz_query);
-        $quiz_data = mysqli_fetch_assoc($quiz_result);
-        $quiz_data = json_decode($quiz_data['quiz_data'], true);
+        while ($answer_row = mysqli_fetch_assoc($answers_result)) {
+            $quiz_id = $answer_row['quiz_id'];
+            $student_answer = $answer_row['answer'];
 
-        $correct_answer = $quiz_data['correct_option']; // Assuming 'correct_option' holds the correct answer
+            // Fetch correct answer from quiz data
+            $quiz_query = "SELECT quiz_data FROM quizzez WHERE id = '$quiz_id'";
+            $quiz_result = mysqli_query($conn, $quiz_query);
+            $quiz_data = mysqli_fetch_assoc($quiz_result);
+            $quiz_data = json_decode($quiz_data['quiz_data'], true);
 
-        // Display question and answer
-        echo "<li>";
-        echo "<strong>Question:</strong> " . htmlspecialchars($quiz_data['question']) . "<br>";
-        echo "<strong>Your Answer:</strong> " . htmlspecialchars($quiz_data['options'][$student_answer]) . "<br>";
-        echo "<strong>Correct Answer:</strong> " . htmlspecialchars($quiz_data['options'][$correct_answer]) . "<br>";
+            $correct_answer = $quiz_data['correct_option']; // Assuming 'correct_option' holds the correct answer
 
-        // Check if the student's answer is correct
-        if ($student_answer == $correct_answer) {
-            echo "<span style='color: green;'>Correct</span>";
-            $correct_answers++;
-        } else {
-            echo "<span style='color: red;'>Incorrect</span>";
+            // Display question and answer
+            echo "<li class='quiz-option'>";
+            echo "<strong>Question $counter:</strong> " . htmlspecialchars($quiz_data['question']) . "<br>";
+            echo "<strong>Your Answer:</strong> " . htmlspecialchars($quiz_data['options'][$student_answer]) . "<br>";
+            echo "<strong>Correct Answer:</strong> " . htmlspecialchars($quiz_data['options'][$correct_answer]) . "<br>";
+
+            // Check if the student's answer is correct
+            if ($student_answer == $correct_answer) {
+                echo "<span style='color: green;'>Correct</span>";
+                $correct_answers++;
+            } else {
+                echo "<span style='color: red;'>Incorrect</span>";
+            }
+            echo "</li><br>";
+
+            $total_questions++;
+            $counter++;
         }
-        echo "</li><br>";
 
-        $total_questions++;
-    }
+        echo "</ul>";
 
-    echo "</ul>";
+        // Display final score
+        echo "<h3>Total Score: $correct_answers / $total_questions</h3>";
+        ?>
+    </div>
 
-    // Display final score
-    echo "<h3>Total Score: $correct_answers / $total_questions</h3>";
-    ?>
 </div>
 
 <?php include("./includes/footer.php"); ?>

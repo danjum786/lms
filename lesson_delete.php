@@ -2,7 +2,7 @@
 include("./includes/db.php");
 session_start();
 
-// Redirect if not logged in as admin
+// Check if the user is logged in as admin
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     $_SESSION['showAlert'] = [
         'color' => '#721c24',
@@ -16,9 +16,22 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
 if (isset($_GET['id'])) {
     $lesson_id = mysqli_real_escape_string($conn, $_GET['id']);
 
-    // Delete lesson from the database
-    $sql = "DELETE FROM lessons WHERE lesson_id = '$lesson_id'";
+    // Check if there are any quizzes in this lesson
+    $check_quizzes_query = "SELECT * FROM quizzez WHERE lesson_id = '$lesson_id'";
+    $check_quizzes_result = mysqli_query($conn, $check_quizzes_query);
 
+    if (mysqli_num_rows($check_quizzes_result) > 0) {
+        // If quizzes are present in the lesson, prevent deletion
+        $_SESSION['showAlert'] = [
+            'color' => '#721c24',
+            'msg' => 'This lesson cannot be deleted because it contains quizzes.'
+        ];
+        header("Location: lesson_manage.php");
+        exit();
+    }
+
+    // If no quizzes are present, delete the lesson
+    $sql = "DELETE FROM lessons WHERE lesson_id = '$lesson_id'";
     if (mysqli_query($conn, $sql)) {
         $_SESSION['showAlert'] = [
             'color' => '#155724',

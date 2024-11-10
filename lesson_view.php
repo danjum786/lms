@@ -84,12 +84,17 @@ $quiz_result = mysqli_query($conn, $quiz_sql);
                             }
                             ?>
                         </ul>
-                        <p><strong>Correct Option:</strong> Option <?php echo $quiz_data['correct_option']; ?></p>
-                        <!-- Delete Button -->
-                        <form method="POST" action="quiz_delete.php" style="text-align:right; margin-top:20px;">
-                            <input type="hidden" name="quiz_id" value="<?php echo $quiz['id']; ?>" />
-                            <button type="submit" class="btn btn-delete">Delete</button>
-                        </form>
+                        <?php if ($_SESSION['role'] !== "student"): ?>
+                            <!-- Only show the correct option to admins or instructors -->
+                            <p><strong>Correct Option:</strong> Option <?php echo $quiz_data['correct_option']; ?></p>
+                        <?php endif; ?>
+                        <?php if ($_SESSION['role'] !== "student"): ?>
+                            <!-- Delete Button -->
+                            <form method="POST" action="quiz_delete.php" style="margin-top:20px;">
+                                <input type="hidden" name="quiz_id" value="<?php echo $quiz['id']; ?>" />
+                                <button style="background-color: red; max-width: fit-content;" type="submit" class="btn btn-delete">Delete</button>
+                            </form>
+                        <?php endif ?>
                     </div>
             <?php
                 }

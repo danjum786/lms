@@ -48,22 +48,25 @@ if (mysqli_num_rows($check_attempt_result) > 0) {
 ?>
 
 <!-- Quiz Form for Student -->
-<form action="quiz_submit.php" method="POST">
-    <input type="hidden" name="lesson_id" value="<?php echo $lesson_id; ?>" />
+<div class="main-content">
+    <h1>Quiz Test</h1>
+    <form action="quiz_submit.php" method="POST">
+        <input type="hidden" name="lesson_id" value="<?php echo $lesson_id; ?>" />
 
-    <?php
-    while ($quiz = mysqli_fetch_assoc($quiz_result)) {
-        $quiz_data = json_decode($quiz['quiz_data'], true);
-        echo '<div class="quiz-question">';
-        echo '<h3>' . htmlspecialchars($quiz_data['question']) . '</h3>';
-        echo '<ul>';
-        foreach ($quiz_data['options'] as $option_num => $option_text) {
-            echo "<li><input type='radio' name='answer[{$quiz['id']}]' value='$option_num' /> $option_text</li>";
+        <?php
+        while ($quiz = mysqli_fetch_assoc($quiz_result)) {
+            $quiz_data = json_decode($quiz['quiz_data'], true);
+            echo '<div class="quiz-question">';
+            echo '<h3>' . htmlspecialchars($quiz_data['question']) . '</h3>';
+            echo '<ul>';
+            foreach ($quiz_data['options'] as $option_num => $option_text) {
+                echo "<li><input type='radio' name='answer[{$quiz['id']}]' value='$option_num' /> $option_text</li>";
+            }
+            echo '</ul><br />';
+            echo '</div>';
         }
-        echo '</ul><br />';
-        echo '</div>';
-    }
-    ?>
-    <button type="submit">Submit Answer</button>
-</form>
+        ?>
+        <button type="submit" class="submit-quiz">Submit Answer</button>
+    </form>
+</div>
 <?php include("./includes/footer.php"); ?>

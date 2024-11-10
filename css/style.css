@@ -501,3 +501,58 @@ button[type="submit"]:hover {
   font-weight: bold;
   color: #333;
 }
+
+/* Form styling quiz paper*/
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.quiz-question {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+.quiz-question h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.quiz-question ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.quiz-question li {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.quiz-question input[type="radio"] {
+  margin-right: 10px;
+  transform: scale(1.2);
+}
+
+/* Button Styling */
+.submit-quiz {
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.submit-quiz[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.submit-quiz[type="submit"]:active {
+  background-color: #004085;
+}

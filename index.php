@@ -11,8 +11,8 @@ if (isset($_SESSION['showAlert'])) {
 ?>
 <!-- Main Content Area -->
 <div class="main-content">
-    <h1>Welcome to the Dashboard</h1>
-    <p>This is a responsive dashboard layout with a sidebar navigation menu.</p>
+    <h1 style="text-align: center;">Welcome <?php echo ucfirst($_SESSION['user_name']) ?></h1>
+    
 </div>
 
 
