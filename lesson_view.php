@@ -81,6 +81,11 @@ $quiz_result = mysqli_query($conn, $quiz_sql);
                             ?>
                         </ul>
                         <p><strong>Correct Option:</strong> Option <?php echo $quiz_data['correct_option']; ?></p>
+                        <!-- Delete Button -->
+                        <form method="POST" action="quiz_delete.php" style="text-align:right; margin-top:20px;">
+                            <input type="hidden" name="quiz_id" value="<?php echo $quiz['id']; ?>" />
+                            <button type="submit" class="btn-delete">Delete</button>
+                        </form>
                     </div>
             <?php
                 }
@@ -89,6 +94,7 @@ $quiz_result = mysqli_query($conn, $quiz_sql);
             }
             ?>
         </div>
+
     </div>
 
 </div>
