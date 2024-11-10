@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
 }
 
 // Fetch lessons with course titles
-$sql = "SELECT lessons.lesson_id, lessons.title, lessons.created_at, courses.title AS course_title 
+$sql = "SELECT lessons.lesson_id,lessons.course_id, lessons.title, lessons.created_at, courses.title AS course_title 
         FROM lessons 
         JOIN courses ON lessons.course_id = courses.course_id";
 $result = mysqli_query($conn, $sql);
@@ -39,19 +39,22 @@ $result = mysqli_query($conn, $sql);
         </thead>
         <tbody>
             <?php if (mysqli_num_rows($result) > 0): ?>
-                <?php while ($lesson = mysqli_fetch_assoc($result)): ?>
+                <?php $counter = 1;
+                while ($lesson = mysqli_fetch_assoc($result)): ?>
                     <tr>
-                        <td><?php echo htmlspecialchars($lesson['lesson_id']); ?></td>
+                        <td><?php echo $counter; ?></td>
                         <td><?php echo htmlspecialchars($lesson['title']); ?></td>
                         <td><?php echo htmlspecialchars($lesson['course_title']); ?></td>
                         <td><?php echo date('Y-m-d', strtotime($lesson['created_at'])); ?></td>
                         <td>
-                            <a href="lesson_view.php?id=<?php echo $lesson['lesson_id']; ?>" class="btn btn-view">View</a>
+                            <a href="quiz_add.php?lesson_id=<?php echo $lesson['lesson_id']; ?>" class="btn btn-view">Add Quiz</a>
                             <a href="lesson_edit.php?id=<?php echo $lesson['lesson_id']; ?>" class="btn btn-edit">Edit</a>
                             <a href="lesson_delete.php?id=<?php echo $lesson['lesson_id']; ?>" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this lesson?');">Delete</a>
+                            <a href="lesson_view.php?id=<?php echo $lesson['lesson_id']; ?>" class="btn btn-view">View</a>
                         </td>
                     </tr>
-                <?php endwhile; ?>
+                <?php $counter++;
+                endwhile; ?>
             <?php else: ?>
                 <tr>
                     <td colspan="5">No lessons found.</td>

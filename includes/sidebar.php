@@ -35,6 +35,13 @@ checkUser();
                     <li><a href="lesson_manage.php">Manage Lessons</a></li>
                 </ul>
             </li>
+            <li class="dropdown">
+                <a href="#"><i class="fas fa-book"></i> Quiz <i class="fas fa-caret-down caret"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="./quiz_add.php">Add Quiz</a></li>
+                    <li><a href="quiz_manage.php">Manage Quiz</a></li>
+                </ul>
+            </li>
             <!-- Admin: Show Students section -->
             <li>
                 <a href="#"><i class="fas fa-book"></i> Students</a>

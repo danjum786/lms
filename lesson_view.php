@@ -53,6 +53,60 @@ if (!$lesson) {
             <p><?php echo nl2br(htmlspecialchars($lesson['content'])); ?></p>
         </div>
     </div>
+
+    <!-- Display Quizzes for this Lesson -->
+    <div class="lesson-quizzes">
+        <h3>Quizzes for this Lesson</h3>
+
+        <?php
+        // Fetch quizzes associated with this lesson
+        $sql_quizzes = "SELECT * FROM lesson_quizzes WHERE lesson_id = '$lesson_id'";
+        $quizzes_result = mysqli_query($conn, $sql_quizzes);
+
+        $counter = 1;
+        if (mysqli_num_rows($quizzes_result) > 0) {
+            while ($quiz = mysqli_fetch_assoc($quizzes_result)) {
+                echo "<div class='quiz'>";
+
+                // Fetch questions for this quiz
+                $quiz_id = $quiz['quiz_id'];
+                $sql_questions = "SELECT * FROM quiz_questions WHERE lesson_quiz_id = '$quiz_id'";
+                $questions_result = mysqli_query($conn, $sql_questions);
+
+                if (mysqli_num_rows($questions_result) > 0) {
+                    while ($question = mysqli_fetch_assoc($questions_result)) {
+                        echo "<div class='question'>";
+                        echo "<p><strong>$counter Question:</strong> " . htmlspecialchars($question['question_text']) . "</p>";
+
+                        // Fetch options for this question
+                        $question_id = $question['question_id'];
+                        $sql_options = "SELECT * FROM quiz_options WHERE question_id = '$question_id'";
+                        $options_result = mysqli_query($conn, $sql_options);
+
+                        echo "<ul class='quiz-list'>";
+                        while ($option = mysqli_fetch_assoc($options_result)) {
+                            $is_correct = $option['is_correct'] ? ' (Correct)' : '';
+                            echo "<li class='quiz-item'>" . htmlspecialchars($option['option_text']) . $is_correct . "</li>";
+                        }
+                        echo "</ul>";
+                        // echo <<<HTML
+                        //         <button class="btn btn-delete" style="margin:20px 0px;" onclick="deleteQuiz({$quiz['quiz_id']})">Delete Quiz</button>
+                        //         HTML;
+                        echo "</div>"; // end question
+                        $counter++;
+                    }
+                } else {
+                    echo "<p>No questions available for this quiz.</p>";
+                }
+                echo "</div>"; // end quiz
+            }
+        } else {
+            echo "<p>No quizzes available for this lesson.</p>";
+        }
+        ?>
+
+
+    </div>
 </div>
 
 <?php include("./includes/footer.php"); ?>

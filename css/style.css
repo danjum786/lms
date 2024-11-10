@@ -442,3 +442,65 @@ button[type="submit"]:hover {
   margin: 0;
   padding: 0;
 }
+
+
+/* Quiz Section Container */
+.lesson-quizzes {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f8f9fa; /* Light background to separate quizzes from lessons */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+/* Quiz Title Styling */
+.lesson-quizzes h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Quiz List Item Styling */
+.quiz-list {
+  list-style: none;
+  padding: 0;
+}
+
+.quiz-item {
+  padding: 12px 15px;
+  margin: 10px 0;
+  background-color: #fff;
+  border: 1px solid #e3e6ea;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quiz-item h4 {
+  font-size: 1.2rem;
+  color: #333;
+  margin: 0;
+}
+
+.quiz-item p {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 5px 0;
+}
+
+/* Button to Take Quiz */
+.take-quiz-btn {
+  padding: 8px 15px;
+  font-size: 0.9rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.take-quiz-btn:hover {
+  background-color: #0056b3;
+}

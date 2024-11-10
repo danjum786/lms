@@ -76,3 +76,13 @@ function deleteUser(userId) {
       .catch((error) => console.error("Error:", error));
   }
 }
+
+// Delete Quiz
+function deleteQuiz(quizId) {
+  const confirmDelete = confirm(
+    "Are you sure you want to delete this quiz and its options?"
+  );
+  if (confirmDelete) {
+    window.location.href = `quiz_delete_process.php?quiz_id=${quizId}`;
+  }
+}
