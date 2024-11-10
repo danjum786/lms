@@ -64,7 +64,8 @@ $result = mysqli_query($conn, $sql);
 
                                 <?php elseif ($_SESSION['role'] === 'student'): ?>
                                     <a href="lesson_view.php?id=<?php echo $lesson['lesson_id']; ?>" class="btn btn-view">View</a>
-                                    <a href="student_quiz.php?lesson_id=<?php echo $lesson['lesson_id']; ?>" class="btn btn-edit">Take Quiz</a>
+                                    <a href="quiz_paper.php?lesson_id=<?php echo $lesson['lesson_id']; ?>" class="btn btn-edit">Take Quiz</a>
+                                    <a href="quiz_submit_result.php?lesson_id=<?php echo $lesson['lesson_id']; ?>" class="btn btn-view">View Result</a>
                                 <?php endif; ?>
                             <?php endif; ?>
 

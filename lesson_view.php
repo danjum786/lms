@@ -65,7 +65,11 @@ $quiz_result = mysqli_query($conn, $quiz_sql);
     <!-- Display Quizzes -->
     <div class="lesson-details">
         <div class="quizzes">
-            <h3>Quizzes for this Lesson</h3>
+            <!-- Display the link or button to access the quiz -->
+            <div style="display:flex; justify-content:space-between; padding: 10px;">
+                <h3>Quizzes for this Lesson</h3>
+                <a class="btn btn-edit" style="text-decoration: none;" href="quiz_paper.php?lesson_id=<?php echo $lesson_id; ?>">Take Quiz</a>
+            </div>
             <?php
             if (mysqli_num_rows($quiz_result) > 0) {
                 while ($quiz = mysqli_fetch_assoc($quiz_result)) {
@@ -84,7 +88,7 @@ $quiz_result = mysqli_query($conn, $quiz_sql);
                         <!-- Delete Button -->
                         <form method="POST" action="quiz_delete.php" style="text-align:right; margin-top:20px;">
                             <input type="hidden" name="quiz_id" value="<?php echo $quiz['id']; ?>" />
-                            <button type="submit" class="btn-delete">Delete</button>
+                            <button type="submit" class="btn btn-delete">Delete</button>
                         </form>
                     </div>
             <?php

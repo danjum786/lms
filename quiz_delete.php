@@ -27,7 +27,7 @@ if (isset($_POST['quiz_id'])) {
     } else {
         $_SESSION['showAlert'] = [
             'color' => '#721c24',
-            'msg' => 'Error deleting quiz: ' . mysqli_error($conn)
+            'msg' => 'Cannot delete this lesson'
         ];
     }
 } else {

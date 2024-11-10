@@ -27,7 +27,7 @@ $lesson = mysqli_fetch_assoc($result);
 
 if (!$lesson) {
     $_SESSION['showAlert'] = [
-        'color' => 'danger',
+        'color' => '#721c24',
         'msg' => 'Lesson not found.'
     ];
     header("Location: lesson_manage.php");
@@ -48,14 +48,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (mysqli_query($conn, $updateSql)) {
         $_SESSION['showAlert'] = [
-            'color' => 'success',
+            'color' => '#155724',
             'msg' => 'Lesson updated successfully.'
         ];
         header("Location: lesson_manage.php");
         exit();
     } else {
         $_SESSION['showAlert'] = [
-            'color' => 'danger',
+            'color' => '#721c24',
             'msg' => 'Error updating lesson: ' . mysqli_error($conn)
         ];
     }
